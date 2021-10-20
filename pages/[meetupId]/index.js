@@ -1,14 +1,25 @@
 import { MongoClient, ObjectId } from "mongodb";
+import Head from "next/head";
+import { Fragment } from "react";
 import MeetupDetail from "../../components/meetups/MeetupDetail";
 
 const MeetupDetails = (props) => {
   return (
-    <MeetupDetail
-      image={props.meetupData.image}
-      title={props.meetupData.title}
-      address={props.meetupData.address}
-      description={props.meetupData.description}
-    />
+    <Fragment>
+      <Head>
+        <title>{props.meetupData.title}</title>
+        <meta
+          name="description"
+          content={props.meetupData.description}
+        />
+      </Head>
+      <MeetupDetail
+        image={props.meetupData.image}
+        title={props.meetupData.title}
+        address={props.meetupData.address}
+        description={props.meetupData.description}
+      />
+    </Fragment>
   );
 };
 
@@ -16,7 +27,7 @@ const MeetupDetails = (props) => {
 //false는 지원 한다는 의미, true면 아이디값을 동적으로 생성
 export const getStaticPaths = async () => {
   const client = await MongoClient.connect(
-    "mongodb+srv://first-user1:<password>@cluster0.zay22.mongodb.net/meetups?retryWrites=true&w=majority"
+    "mongodb"
   );
 
   const db = client.db();
@@ -41,7 +52,7 @@ export const getStaticProps = async (context) => {
   const meetupId = context.params.meetupId;
 
   const client = await MongoClient.connect(
-    "mongodb+srv://first-user1:<password>@cluster0.zay22.mongodb.net/meetups?retryWrites=true&w=majority"
+    "mongodb"
   );
 
   const db = client.db();

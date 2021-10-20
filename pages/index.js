@@ -1,9 +1,22 @@
+import Head from "next/head";
 import { MongoClient } from "mongodb";
 
 import MeetupList from "../components/meetups/MeetupList";
+import { Fragment } from "react";
 
 const HomePage = (props) => {
-  return <MeetupList meetups={props.meetups} />;
+  return (
+    <Fragment>
+      <Head>
+        <title>React Meetups</title>
+        <meta
+          name="description"
+          content="Browse a huge list of highly active React meetups!"
+        />
+      </Head>
+      <MeetupList meetups={props.meetups} />
+    </Fragment>
+  );
 };
 
 //SSR
@@ -24,7 +37,7 @@ export const getStaticProps = async () => {
   // fetch data from an api
 
   const client = await MongoClient.connect(
-    "mongodb+srv://first-user1:<password>@cluster0.zay22.mongodb.net/meetups?retryWrites=true&w=majority"
+    "mongodb"
   );
 
   const db = client.db();
